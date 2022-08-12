@@ -1,0 +1,17 @@
+header{
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    color: #000;
+    height: 70px;
+     z-index: 9999;
+     display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+header a{
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}

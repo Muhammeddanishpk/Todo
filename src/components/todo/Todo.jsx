@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import "./Todo.css";
+import Waves from "./waves"
 export class Todo extends Component {
   state = {
     input: "",
     items: [],
+    edit:false
+
   };
   handleChange = (event) => {
     const { input } = this.state;
@@ -24,21 +27,53 @@ export class Todo extends Component {
     
   };
   editItem = (event) => {
-    alert("dddddd")
+
+    this.setState({
+      edit:true
+    })
   }
+  handleChangeItem = (event) =>{
+    event.preventDefault();
+    const { items } = this.state;
+
+    this.setState({...items, text:event.target.value});
+    console.log(items);
+  }
+  cancel = () =>{
+    this.setState({
+      edit:false
+    })
+  }
+
   deleteItem = (index) => {
-    window.confirm("Do you want to delete the task?")
-    const allItems = this.state.items;
+    if( window.confirm("Do you want to delete the task?")){
+         const allItems = this.state.items;
     allItems.splice(index,1)
     this.setState({
       items: allItems,
     })
+    }
+   
   };
   render() {
     const { input, items } = this.state;
     console.log(items);
     return (
       <div>
+          <Waves/>
+                <div className={`${this.state.edit ? 'editdiv' : 'hide'}`}>
+            <form onSubmit={this.handleChangeItem}>
+            <label for="fname"></label>
+              <input onChange={this.handleChange} value={items.text} placeholder="Edit Item" type="text" />
+              <div className="btns"><span></span>
+              <span>
+              <button onClick={this.cancel} type="button" className="btn">Cancel</button>
+                <button onClick={this.handleEdit} type="button" className="btn">Edit</button>
+              </span>
+              </div>
+              
+            </form>
+        </div>
       <div className="todo-container">
         <h1>Todo</h1>
         <form className="input-section" onSubmit={this.storeItem}>
@@ -66,12 +101,7 @@ export class Todo extends Component {
 
         
       </div>
-        <div className="editdiv">
-            <form>
-              <input type="text" />
-              <button type="button" className="btn" >Edit</button>
-            </form>
-        </div>
+
       </div>
     );
   }
